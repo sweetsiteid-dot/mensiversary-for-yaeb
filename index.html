@@ -1,264 +1,1636 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100d14">
-  <title>Happy Mensiversary | Yaeb & Zaheed</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy Mensiversary | Yaeb & Zaheed</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        igDark: '#000000',
+                        igCard: '#121212',
+                        igBorder: '#262626',
+                        igHover: '#1a1a1a',
+                        igPink: '#E1306C',
+                        igPurple: '#833AB4',
+                        igOrange: '#FCD145',
+                        igRed: '#FD1D1D'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        insta: ['Grand Hotel', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar hiding */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        html, body {
+            background-color: #000000;
+            color: #f5f5f5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .glass-card {
+            background: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-nav {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .story-gradient {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        }
+
+        .text-ig-gradient {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animations */
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(225, 48, 108, 0.4)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 20px rgba(225, 48, 108, 0.8)); }
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shakeError {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-12px); }
+            40%, 80% { transform: translateX(12px); }
+        }
+
+        .animate-spin-slow { animation: spinSlow 12s linear infinite; }
+        .animate-pulse-glow { animation: pulseGlow 2.5s ease-in-out infinite; }
+        .shake-animation { animation: shakeError 0.4s ease-in-out; }
+
+        /* Equalizer Animation */
+        .eq-bar {
+            animation: eqAnim 1.2s ease-in-out infinite alternate;
+        }
+        .eq-bar:nth-child(1) { animation-delay: 0.1s; }
+        .eq-bar:nth-child(2) { animation-delay: 0.3s; }
+        .eq-bar:nth-child(3) { animation-delay: 0.2s; }
+        .eq-bar:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes eqAnim {
+            0% { height: 4px; }
+            100% { height: 18px; }
+        }
+
+        /* Heart Pop Animation for Double Tap */
+        .heart-pop {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            pointer-events: none;
+            z-index: 30;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+        }
+        .heart-pop.active {
+            transform: translate(-50%, -50%) scale(1.3);
+            opacity: 1;
+        }
+
+        /* Memory Card Flip Animation */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+    </style>
 </head>
-<body>
+<body class="bg-black text-gray-100 min-h-screen relative flex flex-col justify-between items-center selection:bg-pink-500 selection:text-white">
 
-  <div class="ambient ambient-one"></div>
-  <div class="ambient ambient-two"></div>
+    <canvas id="bgHeartsCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
 
-  <!-- LOGIN SCREEN -->
-  <section id="loginScreen" class="login-screen">
-    <div class="login-card">
-      <div class="login-logo">♡</div>
-      <p class="eyebrow">A LITTLE PLACE FOR US</p>
-      <h1>Dear <span>Yaeb.</span></h1>
-      <p class="login-description">
-        A tiny archive of memories, feelings, and everything
-        I wish to keep with you.
-      </p>
+    <!-- 1. PASSCODE LOCK SCREEN MODAL -->
+    <div id="pinLockScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 bg-black/90 backdrop-blur-2xl transition-all duration-700">
+        <div class="glass-card max-w-sm w-full rounded-3xl p-8 flex flex-col items-center text-center shadow-2xl border border-white/10 relative overflow-hidden">
+            <!-- Decorative Glow -->
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-pink-600/30 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-purple-600/30 rounded-full blur-3xl"></div>
 
-      <div class="login-input-wrap">
-        <input id="pinInput" type="password" maxlength="4"
-          inputmode="numeric" placeholder="Enter your secret PIN">
-      </div>
-      <button id="unlockBtn" class="primary-btn">Open our little world ♡</button>
-      <p id="pinError" class="error-text"></p>
-      <span class="login-footer">made with love, by Zaheed</span>
+            <!-- Profile Avatar Preview -->
+            <div class="relative mb-4">
+                <div class="w-20 h-20 rounded-full p-[3px] story-gradient animate-pulse-glow">
+                    <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" alt="Yaeb & Zaheed" class="w-full h-full object-cover rounded-full border-2 border-black">
+                </div>
+                <span class="absolute bottom-0 right-0 bg-pink-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-lg">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+            </div>
+
+            <h2 class="text-xl font-bold text-white mb-1">Happy Mensiversary ✨</h2>
+            <p class="text-xs text-gray-400 mb-6">Masukan Passcode Khusus Yaeb 🤍</p>
+
+            <!-- PIN Dots Display -->
+            <div id="pinDots" class="flex gap-4 mb-8">
+                <div class="dot w-4 h-4 rounded-full border-2 border-gray-600 transition-all duration-200"></div>
+                <div class="dot w-4 h-4 rounded-full border-2 border-gray-600 transition-all duration-200"></div>
+                <div class="dot w-4 h-4 rounded-full border-2 border-gray-600 transition-all duration-200"></div>
+                <div class="dot w-4 h-4 rounded-full border-2 border-gray-600 transition-all duration-200"></div>
+            </div>
+
+            <!-- Lock Status Message -->
+            <p id="pinErrorMsg" class="text-xs text-pink-500 font-semibold h-4 mb-4 transition-opacity opacity-0">Kode salah, coba lagi ya sayang! 🥺</p>
+
+            <!-- Keypad Matrix -->
+            <div class="grid grid-cols-3 gap-4 w-full max-w-[240px] mb-2">
+                <button onclick="pressPin('1')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">1</button>
+                <button onclick="pressPin('2')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">2</button>
+                <button onclick="pressPin('3')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">3</button>
+                <button onclick="pressPin('4')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">4</button>
+                <button onclick="pressPin('5')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">5</button>
+                <button onclick="pressPin('6')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">6</button>
+                <button onclick="pressPin('7')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">7</button>
+                <button onclick="pressPin('8')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">8</button>
+                <button onclick="pressPin('9')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">9</button>
+                <button onclick="clearPin()" class="w-16 h-16 rounded-full text-xs font-medium text-gray-400 hover:text-white active:scale-95 transition-all flex items-center justify-center">CLEAR</button>
+                <button onclick="pressPin('0')" class="keypad-btn w-16 h-16 rounded-full bg-white/5 hover:bg-white/15 active:scale-95 text-xl font-semibold transition-all flex items-center justify-center border border-white/5">0</button>
+                <button onclick="backspacePin()" class="w-16 h-16 rounded-full text-sm text-gray-400 hover:text-white active:scale-95 transition-all flex items-center justify-center"><i class="fa-solid fa-backspace"></i></button>
+            </div>
+
+            <p class="text-[10px] text-gray-500 mt-2">Hint: Tanggal jadian kita (0808) 💌</p>
+        </div>
     </div>
-  </section>
 
-  <!-- MAIN WEBSITE -->
-  <main id="website" class="website hidden">
+    <!-- MAIN APPLICATION WRAPPER -->
+    <div id="mainContent" class="w-full max-w-md min-h-screen bg-black flex flex-col relative z-10 opacity-0 transition-opacity duration-1000">
 
-    <header class="topbar">
-      <div class="brand">our<span>archive.</span></div>
-      <div class="topbar-right">
-        <span class="live-dot"></span>
-        <span>private account</span>
-      </div>
-    </header>
-
-    <div class="page-layout">
-
-      <!-- PROFILE -->
-      <section class="profile-section">
-        <div class="profile-top">
-          <div class="avatar-ring">
-            <div class="avatar">♡</div>
-          </div>
-          <div class="profile-info">
-            <div class="username-line">
-              <h2>anarkiyaib</h2>
-              <span class="verified">✦</span>
+        <!-- TOP HEADER BAR -->
+        <header class="sticky top-0 z-40 glass-nav px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <h1 class="font-insta text-3xl tracking-wide bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 bg-clip-text text-transparent">Instagram</h1>
+                <span class="text-[10px] bg-pink-500/20 text-pink-400 border border-pink-500/30 px-2 py-0.5 rounded-full font-semibold">Mensiversary Edition</span>
             </div>
-            <div class="profile-stats">
-              <div><strong>7</strong><span>posts</span></div>
-              <div><strong>∞</strong><span>memories</span></div>
-              <div><strong>1</strong><span>favorite</span></div>
+            
+            <div class="flex items-center gap-4 text-xl">
+                <!-- Lyrics Drawer Trigger -->
+                <button onclick="openLyricsDrawer()" class="text-gray-200 hover:text-pink-500 transition-colors" title="Lihat Lirik Lagu">
+                    <i class="fa-solid fa-align-left text-sm"></i>
+                </button>
+
+                <!-- Direct Message Trigger -->
+                <button onclick="switchTab('dm')" class="relative text-gray-200 hover:text-pink-500 transition-colors">
+                    <i class="fa-regular fa-paper-plane"></i>
+                    <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-pink-500 rounded-full animate-ping"></span>
+                    <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-pink-500 rounded-full"></span>
+                </button>
+                
+                <!-- Audio Mute/Unmute Button -->
+                <button id="soundToggleBtn" onclick="toggleAudio()" class="text-gray-200 hover:text-pink-500 transition-colors">
+                    <i id="soundIcon" class="fa-solid fa-volume-high text-pink-500"></i>
+                </button>
             </div>
-          </div>
+        </header>
+
+        <!-- STORIES BAR -->
+        <section class="py-3 px-2 border-b border-gray-800/80 bg-black/40 overflow-x-auto no-scrollbar">
+            <div class="flex gap-3 px-2">
+                <!-- User Profile Story -->
+                <div class="flex flex-col items-center gap-1 min-w-[70px]">
+                    <div class="relative w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600">
+                        <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                        <span class="absolute bottom-0 right-0 bg-blue-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-black font-bold">+</span>
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center font-medium">roseinruin</span>
+                </div>
+
+                <!-- Story 1 - 7 Items -->
+                <div onclick="openStoryModal(0)" class="cursor-pointer flex flex-col items-center gap-1 min-w-[70px] group">
+                    <div class="w-16 h-16 rounded-full p-[2.5px] story-gradient group-hover:scale-105 transition-transform">
+                        <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center">My Boy 🤍</span>
+                </div>
+
+                <div onclick="openStoryModal(1)" class="cursor-pointer flex flex-col items-center gap-1 min-w-[70px] group">
+                    <div class="w-16 h-16 rounded-full p-[2.5px] story-gradient group-hover:scale-105 transition-transform">
+                        <img src="foto2.jpg" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center">Lovely Soul ✨</span>
+                </div>
+
+                <div onclick="openStoryModal(2)" class="cursor-pointer flex flex-col items-center gap-1 min-w-[70px] group">
+                    <div class="w-16 h-16 rounded-full p-[2.5px] story-gradient group-hover:scale-105 transition-transform">
+                        <img src="foto3.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center">Fav Person 💫</span>
+                </div>
+
+                <div onclick="openStoryModal(3)" class="cursor-pointer flex flex-col items-center gap-1 min-w-[70px] group">
+                    <div class="w-16 h-16 rounded-full p-[2.5px] story-gradient group-hover:scale-105 transition-transform">
+                        <img src="foto4.jpg" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center">Universe 🌌</span>
+                </div>
+
+                <div onclick="openStoryModal(4)" class="cursor-pointer flex flex-col items-center gap-1 min-w-[70px] group">
+                    <div class="w-16 h-16 rounded-full p-[2.5px] story-gradient group-hover:scale-105 transition-transform">
+                        <img src="foto5.jpg" onerror="this.src='https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center">Smile 😁</span>
+                </div>
+
+                <div onclick="openStoryModal(5)" class="cursor-pointer flex flex-col items-center gap-1 min-w-[70px] group">
+                    <div class="w-16 h-16 rounded-full p-[2.5px] story-gradient group-hover:scale-105 transition-transform">
+                        <img src="foto6.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center">Gentleness 🌸</span>
+                </div>
+
+                <div onclick="openStoryModal(6)" class="cursor-pointer flex flex-col items-center gap-1 min-w-[70px] group">
+                    <div class="w-16 h-16 rounded-full p-[2.5px] story-gradient group-hover:scale-105 transition-transform">
+                        <img src="foto7.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border-2 border-black">
+                    </div>
+                    <span class="text-[11px] text-gray-300 truncate w-16 text-center">Forever 💖</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MULTI-TAB PAGE VIEWS CONTAINER -->
+        <main class="flex-1 pb-24">
+            
+            <!-- TAB 1: FEED TIMELINE -->
+            <section id="tab-feed" class="tab-view space-y-6 py-4">
+                <div id="feedContainer" class="space-y-6 px-0">
+                    <!-- Dynamic Feed Posts rendered via JavaScript -->
+                </div>
+            </section>
+
+            <!-- TAB 2: ARCADE GAMES HUB -->
+            <section id="tab-games" class="tab-view hidden p-4 space-y-6">
+                <!-- Arcade Sub-Header -->
+                <div class="glass-card p-4 rounded-2xl border border-pink-500/20 text-center relative overflow-hidden">
+                    <span class="text-xs font-bold text-pink-400 uppercase tracking-widest block mb-1">Yaeb's Play Zone 🎮</span>
+                    <h2 class="text-lg font-bold text-white">Arcade Spesial Mensiversary</h2>
+                    <p class="text-xs text-gray-400 mt-1">Mainkan game seru ini & dapatkan hadiah istimewa dari Zaheed!</p>
+                </div>
+
+                <!-- Games Selector Pills -->
+                <div class="flex gap-2 overflow-x-auto no-scrollbar py-1">
+                    <button onclick="switchGameMode('memory')" id="btn-game-memory" class="game-pill-btn active px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg">
+                        🧠 Memory Match
+                    </button>
+                    <button onclick="switchGameMode('catcher')" id="btn-game-catcher" class="game-pill-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gray-800 text-gray-300 hover:text-white">
+                        💖 Love Catcher
+                    </button>
+                    <button onclick="switchGameMode('quiz')" id="btn-game-quiz" class="game-pill-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gray-800 text-gray-300 hover:text-white">
+                        ❓ Trivia Quiz
+                    </button>
+                    <button onclick="switchGameMode('coupons')" id="btn-game-coupons" class="game-pill-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gray-800 text-gray-300 hover:text-white">
+                        🎟️ Kupon Cinta
+                    </button>
+                </div>
+
+                <!-- GAME 1: MEMORY MATCH CARD GAME -->
+                <div id="game-view-memory" class="game-container space-y-4">
+                    <div class="flex justify-between items-center text-xs text-gray-400 px-1">
+                        <span>Moves: <strong id="memoryMoves" class="text-white">0</strong></span>
+                        <span>Pairs Matched: <strong id="memoryMatches" class="text-white">0 / 6</strong></span>
+                        <button onclick="initMemoryGame()" class="text-pink-400 hover:text-pink-300 font-medium"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+                    </div>
+
+                    <div id="memoryGrid" class="grid grid-cols-3 gap-3">
+                        <!-- 12 Memory Cards dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- GAME 2: LOVE CATCHER MINI CANVAS GAME -->
+                <div id="game-view-catcher" class="game-container hidden space-y-4">
+                    <div class="glass-card p-3 rounded-2xl flex items-center justify-between text-xs">
+                        <div>Score: <strong id="catcherScore" class="text-pink-400 text-sm">0</strong></div>
+                        <div>Lives: <span id="catcherLives" class="text-red-500 text-sm">❤️❤️❤️</span></div>
+                        <button onclick="startCatcherGame()" class="bg-pink-500 hover:bg-pink-600 px-3 py-1 rounded-full text-white font-bold text-xs">
+                            <i class="fa-solid fa-play"></i> Main
+                        </button>
+                    </div>
+
+                    <div class="relative w-full aspect-[3/4] max-h-[380px] bg-gradient-to-b from-gray-950 to-purple-950/40 rounded-2xl overflow-hidden border border-gray-800 shadow-2xl flex items-center justify-center">
+                        <canvas id="catcherCanvas" class="w-full h-full"></canvas>
+                        
+                        <!-- Overlay Start/Over Screen -->
+                        <div id="catcherOverlay" class="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center space-y-3">
+                            <i class="fa-solid fa-gamepad text-4xl text-pink-500"></i>
+                            <h3 class="text-base font-bold text-white">Love Catcher Game</h3>
+                            <p class="text-xs text-gray-300 leading-relaxed">Geser keranjang Yaeb untuk menangkap Hati 💖 (+10) dan Bintang ⭐ (+25). Hindari Bom 💣!</p>
+                            <button onclick="startCatcherGame()" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold px-6 py-2.5 rounded-full text-xs shadow-lg active:scale-95">
+                                Mulai Permainan 🔥
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Touch Controls for Mobile Catcher -->
+                    <div class="flex justify-between items-center gap-4">
+                        <button id="btnMoveLeft" class="flex-1 py-3 bg-gray-800/80 active:bg-pink-600 rounded-xl text-white font-bold text-lg border border-gray-700">
+                            ◀ LEFT
+                        </button>
+                        <button id="btnMoveRight" class="flex-1 py-3 bg-gray-800/80 active:bg-pink-600 rounded-xl text-white font-bold text-lg border border-gray-700">
+                            RIGHT ▶
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GAME 3: TRIVIA QUIZ GAME -->
+                <div id="game-view-quiz" class="game-container hidden space-y-4">
+                    <div id="quizBox" class="glass-card p-5 rounded-2xl border border-white/10 space-y-4">
+                        <div class="flex items-center justify-between text-xs text-gray-400">
+                            <span id="quizStepText">Pertanyaan 1 dari 5</span>
+                            <span id="quizScoreText">Score: 0</span>
+                        </div>
+
+                        <h3 id="quizQuestion" class="text-sm font-bold text-white leading-relaxed">
+                            Loading Question...
+                        </h3>
+
+                        <div id="quizOptions" class="space-y-2.5">
+                            <!-- Options injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GAME 4: LOVE COUPONS SCRATCH-OFF -->
+                <div id="game-view-coupons" class="game-container hidden space-y-4">
+                    <p class="text-xs text-gray-400 text-center">Klik atau sentuh kupon di bawah ini untuk mengklaim hadiah spesial dari Zaheed! 🎁</p>
+                    <div id="couponsGrid" class="grid grid-cols-2 gap-3">
+                        <!-- Coupons generated via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: DIRECT MESSAGES (DM) SIMULATOR -->
+            <section id="tab-dm" class="tab-view hidden p-4 space-y-4">
+                <div class="glass-card rounded-2xl border border-gray-800 overflow-hidden flex flex-col h-[75vh]">
+                    <!-- DM Header -->
+                    <div class="p-3.5 border-b border-gray-800 flex items-center justify-between bg-black/80">
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-10 h-10 rounded-full object-cover border border-pink-500">
+                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-black"></span>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-white flex items-center gap-1">
+                                    roseinruin <i class="fa-solid fa-circle-check text-blue-400 text-[10px]"></i>
+                                </h3>
+                                <p class="text-[10px] text-gray-400">Active now • Mensiversary Special</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-circle-info text-gray-400 text-lg"></i>
+                    </div>
+
+                    <!-- DM Message Scroll Area -->
+                    <div id="dmScrollArea" class="flex-1 p-4 overflow-y-auto space-y-4 text-xs">
+                        <div class="text-center my-2">
+                            <span class="text-[10px] bg-gray-800/80 text-gray-400 px-3 py-1 rounded-full">Happy Mensiversary • Today 00:01</span>
+                        </div>
+
+                        <!-- Zaheed Message -->
+                        <div class="flex items-end gap-2 max-w-[85%]">
+                            <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-6 h-6 rounded-full object-cover">
+                            <div class="bg-gradient-to-tr from-purple-900/60 to-pink-900/60 border border-pink-500/30 p-3.5 rounded-2xl rounded-bl-none text-gray-100 shadow-lg space-y-2">
+                                <p class="font-bold text-pink-300 text-sm">Happy Mensiversary, My Beloved Yaeb ♡</p>
+                                <p>Another little chapter to celebrate having you in my life, and I hope you know how much you mean to me. I'm endlessly fond of the person you are, even the little things you might not notice about yourself.</p>
+                                <p>I hope life treats you kindly, that happiness finds you in unexpected places, and that you never run out of reasons to smile.</p>
+                                <p class="font-semibold text-pink-200">Thank you for being you, my favorite boy. Here's to many more chapters with you. ♡</p>
+                                <span class="text-[9px] text-pink-300/60 block text-right">00:01</span>
+                            </div>
+                        </div>
+
+                        <!-- Voice Note Bubble -->
+                        <div class="flex items-end gap-2 max-w-[80%]">
+                            <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-6 h-6 rounded-full object-cover">
+                            <div class="bg-gray-800 border border-gray-700 p-3 rounded-2xl rounded-bl-none flex items-center gap-3 w-full">
+                                <button onclick="toggleAudio()" class="w-8 h-8 rounded-full bg-pink-500 text-white flex items-center justify-center shrink-0">
+                                    <i class="fa-solid fa-play text-xs"></i>
+                                </button>
+                                <div class="flex-1 space-y-1">
+                                    <div class="flex items-center gap-1 h-3">
+                                        <div class="w-1 bg-pink-400 h-2 rounded"></div>
+                                        <div class="w-1 bg-pink-400 h-3 rounded"></div>
+                                        <div class="w-1 bg-pink-400 h-1.5 rounded"></div>
+                                        <div class="w-1 bg-pink-400 h-4 rounded"></div>
+                                        <div class="w-1 bg-pink-400 h-2.5 rounded"></div>
+                                    </div>
+                                    <span class="text-[9px] text-gray-400">Voice Note • Kissing in Cars 🎵</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typing Indicator simulation -->
+                    <div id="dmTypingIndicator" class="px-4 py-1 text-[10px] text-gray-500 italic hidden">
+                        anarkiyaib is typing...
+                    </div>
+
+                    <!-- DM Input Bar -->
+                    <div class="p-3 border-t border-gray-800 bg-black/80 flex items-center gap-2">
+                        <input id="dmInput" type="text" placeholder="Balas pesan ke Zaheed..." class="flex-1 bg-gray-900 border border-gray-800 rounded-full px-4 py-2 text-xs text-white focus:outline-none focus:border-pink-500" onkeypress="handleDmKeyPress(event)">
+                        <button onclick="sendDmMessage()" class="text-pink-500 font-bold text-xs px-3 py-2 hover:text-pink-400">Send</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: TIME CAPSULE & ROMANCE COUNTER -->
+            <section id="tab-counter" class="tab-view hidden p-4 space-y-6">
+                <!-- Relationship Counter Banner -->
+                <div class="glass-card p-6 rounded-3xl text-center space-y-4 border border-pink-500/30 relative overflow-hidden">
+                    <div class="absolute -top-10 -left-10 w-28 h-28 bg-pink-500/20 rounded-full blur-2xl"></div>
+                    <span class="text-xs font-bold text-pink-400 uppercase tracking-widest block">Time Spent Together ⏳</span>
+                    <h2 class="text-xl font-bold text-white">Zaheed & Yaeb</h2>
+
+                    <!-- Live Timer Digits -->
+                    <div class="grid grid-cols-4 gap-2 pt-2">
+                        <div class="bg-black/60 border border-white/10 p-2.5 rounded-2xl">
+                            <span id="timerDays" class="text-xl font-extrabold text-pink-500 block">0</span>
+                            <span class="text-[9px] text-gray-400 uppercase font-semibold">Days</span>
+                        </div>
+                        <div class="bg-black/60 border border-white/10 p-2.5 rounded-2xl">
+                            <span id="timerHours" class="text-xl font-extrabold text-pink-500 block">0</span>
+                            <span class="text-[9px] text-gray-400 uppercase font-semibold">Hours</span>
+                        </div>
+                        <div class="bg-black/60 border border-white/10 p-2.5 rounded-2xl">
+                            <span id="timerMins" class="text-xl font-extrabold text-pink-500 block">0</span>
+                            <span class="text-[9px] text-gray-400 uppercase font-semibold">Mins</span>
+                        </div>
+                        <div class="bg-black/60 border border-white/10 p-2.5 rounded-2xl">
+                            <span id="timerSecs" class="text-xl font-extrabold text-pink-500 block">0</span>
+                            <span class="text-[9px] text-gray-400 uppercase font-semibold">Secs</span>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-gray-400 italic">"And every second with you feels like magic ✨"</p>
+                </div>
+
+                <!-- Memory Photo Gallery Album Grid -->
+                <div class="space-y-3">
+                    <h3 class="text-xs font-bold text-gray-300 uppercase tracking-wider">Memory Album 📸</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div onclick="openStoryModal(0)" class="aspect-square rounded-xl overflow-hidden bg-gray-900 border border-gray-800 cursor-pointer hover:opacity-80 transition-opacity">
+                            <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover">
+                        </div>
+                        <div onclick="openStoryModal(1)" class="aspect-square rounded-xl overflow-hidden bg-gray-900 border border-gray-800 cursor-pointer hover:opacity-80 transition-opacity">
+                            <img src="foto2.jpg" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover">
+                        </div>
+                        <div onclick="openStoryModal(2)" class="aspect-square rounded-xl overflow-hidden bg-gray-900 border border-gray-800 cursor-pointer hover:opacity-80 transition-opacity">
+                            <img src="foto3.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover">
+                        </div>
+                        <div onclick="openStoryModal(3)" class="aspect-square rounded-xl overflow-hidden bg-gray-900 border border-gray-800 cursor-pointer hover:opacity-80 transition-opacity">
+                            <img src="foto4.jpg" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover">
+                        </div>
+                        <div onclick="openStoryModal(4)" class="aspect-square rounded-xl overflow-hidden bg-gray-900 border border-gray-800 cursor-pointer hover:opacity-80 transition-opacity">
+                            <img src="foto5.jpg" onerror="this.src='https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover">
+                        </div>
+                        <div onclick="openStoryModal(5)" class="aspect-square rounded-xl overflow-hidden bg-gray-900 border border-gray-800 cursor-pointer hover:opacity-80 transition-opacity">
+                            <img src="foto6.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- FIXED BOTTOM TAB BAR -->
+        <nav class="fixed bottom-0 left-0 right-0 z-40 max-w-md mx-auto glass-nav px-6 py-3 flex items-center justify-between text-xl border-t border-gray-800">
+            <button onclick="switchTab('feed')" id="nav-feed" class="nav-btn active text-pink-500 flex flex-col items-center gap-0.5">
+                <i class="fa-solid fa-house"></i>
+                <span class="text-[9px] font-medium">Feed</span>
+            </button>
+            <button onclick="switchTab('games')" id="nav-games" class="nav-btn text-gray-400 hover:text-white flex flex-col items-center gap-0.5">
+                <i class="fa-solid fa-gamepad"></i>
+                <span class="text-[9px] font-medium">Arcade</span>
+            </button>
+            <button onclick="switchTab('dm')" id="nav-dm" class="nav-btn text-gray-400 hover:text-white flex flex-col items-center gap-0.5 relative">
+                <i class="fa-regular fa-paper-plane"></i>
+                <span class="text-[9px] font-medium">Letter</span>
+                <span class="absolute top-0 right-1 w-2 h-2 bg-pink-500 rounded-full"></span>
+            </button>
+            <button onclick="switchTab('counter')" id="nav-counter" class="nav-btn text-gray-400 hover:text-white flex flex-col items-center gap-0.5">
+                <i class="fa-regular fa-clock"></i>
+                <span class="text-[9px] font-medium">Memory</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- AUDIO LYRICS DRAWER MODAL -->
+    <div id="lyricsDrawer" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-xl hidden flex flex-col justify-end transition-all">
+        <div class="glass-card w-full max-w-md mx-auto rounded-t-3xl p-6 border-t border-pink-500/30 flex flex-col max-h-[80vh]">
+            <div class="w-12 h-1 bg-gray-600 rounded-full mx-auto mb-4"></div>
+            
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-12 h-12 rounded-2xl object-cover border border-pink-500">
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Kissing in Cars</h4>
+                        <p class="text-xs text-gray-400">Pierce the Veil • Special Theme Song 🎵</p>
+                    </div>
+                </div>
+                <button onclick="closeLyricsDrawer()" class="text-gray-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Song Lyrics Scroll Box -->
+            <div class="flex-1 overflow-y-auto space-y-3 text-center text-xs text-gray-300 py-4 leading-relaxed font-serif italic">
+                <p class="text-pink-400 font-bold font-sans">"Hold on, to me so tight..."</p>
+                <p>"Don't let go, it's gonna be alright..."</p>
+                <p>"I know it's hard, but just believe in me..."</p>
+                <p>"We're kissing in cars, we're backing out..."</p>
+                <p class="text-sm font-bold text-white font-sans not-italic py-2">"I'll fall in love all over again..."</p>
+                <p class="text-sm font-bold text-pink-400 font-sans not-italic">"You'll be the one that I'll always defend..."</p>
+                <p class="text-sm font-bold text-white font-sans not-italic">"With every heartbeat, until the end..."</p>
+                <p class="text-base font-extrabold text-pink-500 font-sans not-italic py-2 drop-shadow-md">"Cause you are my home, my favorite friend..." 💖</p>
+                <p>"I'm kissing you in cars..."</p>
+                <p class="text-pink-300 font-semibold font-sans">For Yaeb, forever and always 🤍</p>
+            </div>
         </div>
+    </div>
 
-        <div class="profile-bio">
-          <strong>Yaeb ♡</strong>
-          <p>a lovely soul in the shape of my favorite person.</p>
-          <p>✧ forever someone's favorite boy.</p>
-          <p class="bio-link">with love, from <span>@roseinruin</span></p>
+    <!-- FULLSCREEN INSTAGRAM STORY MODAL -->
+    <div id="storyModal" class="fixed inset-0 z-50 bg-black hidden flex flex-col items-center justify-center">
+        <div class="relative w-full max-w-md h-full bg-black flex flex-col justify-between overflow-hidden">
+            
+            <!-- Story Progress Bars Container -->
+            <div id="storyProgressBars" class="absolute top-3 left-0 right-0 z-20 px-3 flex gap-1">
+                <!-- Bars generated dynamically -->
+            </div>
+
+            <!-- Story Header -->
+            <div class="absolute top-7 left-0 right-0 z-20 px-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-8 h-8 rounded-full border border-pink-500 object-cover">
+                    <span class="text-xs font-bold text-white flex items-center gap-1">
+                        roseinruin <i class="fa-solid fa-circle-check text-blue-400 text-[10px]"></i>
+                    </span>
+                    <span class="text-[10px] text-gray-300">2h</span>
+                </div>
+                <button onclick="closeStoryModal()" class="text-white text-xl p-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Story Touch Navigation Zones -->
+            <div class="absolute inset-0 z-10 flex">
+                <div onclick="prevStory()" class="w-1/3 h-full"></div>
+                <div onclick="nextStory()" class="w-2/3 h-full"></div>
+            </div>
+
+            <!-- Story Main Image Display -->
+            <div class="w-full h-full flex items-center justify-center relative">
+                <img id="storyModalImg" src="" class="w-full h-full object-cover">
+                
+                <!-- Floating Caption Glass Overlay -->
+                <div class="absolute bottom-20 left-4 right-4 z-20 glass-card p-4 rounded-2xl border border-white/20 shadow-xl">
+                    <p id="storyModalCaption" class="text-xs font-medium text-white leading-relaxed text-center"></p>
+                </div>
+            </div>
+
+            <!-- Story Footer Quick Reply Input -->
+            <div class="absolute bottom-4 left-0 right-0 z-20 px-4 flex items-center gap-3">
+                <input type="text" placeholder="Send message to Zaheed..." class="flex-1 bg-white/10 border border-white/20 backdrop-blur-md rounded-full px-4 py-2.5 text-xs text-white placeholder-gray-300 focus:outline-none">
+                <button onclick="shootStoryHeart()" class="text-white text-xl hover:text-pink-500 transition-colors">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
         </div>
+    </div>
 
-        <div class="profile-actions">
-          <button class="profile-btn" onclick="scrollToPosts()">View memories</button>
-          <button class="profile-btn secondary" onclick="openDM()">Message</button>
-        </div>
-
-        <div class="story-row">
-          <div class="story-item">
-            <div class="story-circle">♡</div>
-            <span>us</span>
-          </div>
-          <div class="story-item">
-            <div class="story-circle">✧</div>
-            <span>favorite</span>
-          </div>
-          <div class="story-item">
-            <div class="story-circle">☾</div>
-            <span>moments</span>
-          </div>
-          <div class="story-item">
-            <div class="story-circle">∞</div>
-            <span>always</span>
-          </div>
-        </div>
-      </section>
-
-      <div class="section-divider"></div>
-
-      <!-- POSTS -->
-      <section id="postsSection" class="posts-section">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">A COLLECTION OF US</p>
-            <h2>Little moments, <i>big feelings.</i></h2>
-          </div>
-          <span class="post-count">07 POSTS</span>
-        </div>
-
-        <div id="postsGrid" class="posts-grid"></div>
-      </section>
-
-      <!-- RELATIONSHIP -->
-      <section class="relationship-card">
-        <p class="eyebrow">OUR LITTLE TIMELINE</p>
-        <h2>Since the day <i>we began.</i></h2>
-        <p class="relationship-date">08 August 2026</p>
-
-        <div class="counter-grid">
-          <div><strong id="days">0</strong><span>days</span></div>
-          <div><strong id="hours">00</strong><span>hours</span></div>
-          <div><strong id="minutes">00</strong><span>minutes</span></div>
-          <div><strong id="seconds">00</strong><span>seconds</span></div>
-        </div>
-        <p class="counter-note">and every second is another reason to choose you. ♡</p>
-      </section>
-
-      <!-- LETTER -->
-      <section class="letter-section">
-        <p class="eyebrow">A LETTER FOR YOU</p>
-        <h2>Something I want <i>you to know.</i></h2>
-        <div class="letter-paper">
-          <span class="letter-decoration">♡</span>
-          <p class="letter-to">To my dearest Yaeb,</p>
-          <p>
-            Happy mensiversary to my favorite boy.
-            I don't think words will ever be enough to explain
-            how grateful I am to have you in my life.
-          </p>
-          <p>
-            There's something special about you that makes
-            even the simplest days feel a little more beautiful.
-            I hope you never forget how precious you are,
-            not only to me, but simply as the person you are.
-          </p>
-          <p>
-            May life always be gentle with you.
-            May your days be filled with little happiness,
-            warm moments, and countless reasons to smile.
-          </p>
-          <p>
-            Thank you for being my favorite person.
-            Here's to more memories, more laughter,
-            and many more chapters together.
-          </p>
-          <p class="letter-sign">With all my love,<br><i>Zaheed ♡</i></p>
-        </div>
-      </section>
-
-      <!-- QUIZ -->
-      <section class="quiz-section">
-        <p class="eyebrow">A LITTLE GAME</p>
-        <h2>How well do you <i>know us?</i></h2>
-        <div class="quiz-card">
-          <span id="quizNumber">QUESTION 01 / 04</span>
-          <h3 id="quizQuestion">When did our little story begin?</h3>
-          <div id="quizOptions" class="quiz-options"></div>
-          <p id="quizFeedback"></p>
-          <button id="nextQuizBtn" class="primary-btn hidden">Next question →</button>
-          <div id="quizResult" class="quiz-result hidden"></div>
-        </div>
-      </section>
-
-      <!-- SECRET -->
-      <section class="secret-section">
-        <p class="eyebrow">ONE MORE LITTLE THING</p>
-        <h2>A secret, just <i>for you.</i></h2>
-        <p>There is something waiting behind this little button.</p>
-        <button id="secretBtn" class="secret-btn">Open your surprise ♡</button>
-        <div id="secretMessage" class="secret-message hidden">
-          <span>♡</span>
-          <h3>You are my favorite notification.</h3>
-          <p>
-            If I could choose a person to meet in every lifetime,
-            I would still look for you. Thank you for existing,
-            Yaeb. I love the little world we are building together.
-          </p>
-        </div>
-      </section>
-
-      <!-- DM -->
-      <section class="dm-section" id="dmSection">
-        <p class="eyebrow">DIRECT MESSAGE</p>
-        <h2>A message from <i>Zaheed.</i></h2>
-
-        <div class="dm-window">
-          <div class="dm-header">
-            <div class="dm-avatar">Z</div>
+    <!-- BOYFRIEND CERTIFICATE MODAL -->
+    <div id="certificateModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden flex items-center justify-center p-4">
+        <div class="glass-card max-w-sm w-full rounded-3xl p-6 text-center border-2 border-yellow-500/50 shadow-2xl space-y-4 relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-24 h-24 bg-yellow-500/20 rounded-full blur-2xl"></div>
+            
+            <i class="fa-solid fa-award text-5xl text-yellow-400 animate-bounce"></i>
             <div>
-              <strong>roseinruin</strong>
-              <span>your favorite sender ♡</span>
+                <span class="text-[10px] font-bold text-yellow-400 uppercase tracking-widest block">Official Award</span>
+                <h2 class="text-xl font-extrabold text-white">Best Boyfriend Certificate</h2>
             </div>
-            <span class="dm-online">●</span>
-          </div>
-          <div class="dm-body">
-            <span class="message-date">TODAY · A SPECIAL DAY</span>
-            <div class="dm-bubble">
-              Happy mensiversary, my beloved Yaeb. Another little
-              chapter to celebrate having you in my life, and I
-              hope you know how much you mean to me. I'm endlessly
-              fond of the person you are, even the little things
-              you might not notice about yourself. I hope life
-              treats you kindly, that happiness finds you in
-              unexpected places, and that you never run out of
-              reasons to smile. Thank you for being you, my
-              favorite boy. Here's to many more chapters with you. ♡
+
+            <p class="text-xs text-gray-300 italic">"Sertifikat Penghargaan Resmi diberikan kepada:"</p>
+            
+            <div class="py-2 border-y border-yellow-500/30">
+                <h3 class="text-lg font-bold text-pink-400">YAEB</h3>
+                <p class="text-[11px] text-gray-400">Sebagai Pacar Terbaik & Terfavorit Zaheed ✨</p>
             </div>
-            <span class="seen-label">Seen just now ♡</span>
-          </div>
+
+            <p class="text-[10px] text-gray-400">Lulus Ujian Ketahanan Sabar, Perhatian, dan Kelucuan dengan Nilai 100/100 🏆</p>
+
+            <button onclick="closeCertificateModal()" class="w-full bg-gradient-to-r from-yellow-500 to-pink-500 text-black font-bold py-2.5 rounded-full text-xs shadow-lg">
+                Klaim & Simpan Sertifikat 💕
+            </button>
         </div>
-      </section>
-
-      <!-- FOOTER -->
-      <footer>
-        <div class="footer-heart">♡</div>
-        <h2>Always, <i>in every little way.</i></h2>
-        <p>Created with love by Zaheed for Yaeb.</p>
-        <span>08.08.2026 — ∞</span>
-      </footer>
-
     </div>
-  </main>
 
-  <!-- POST MODAL -->
-  <div id="postModal" class="modal hidden">
-    <div class="modal-backdrop" onclick="closePost()"></div>
-    <div class="post-modal-content">
-      <button class="modal-close" onclick="closePost()">×</button>
-      <img id="modalImage" src="" alt="Our memory">
-      <div class="modal-caption">
-        <strong>anarkiyaib</strong>
-        <p id="modalCaption"></p>
-        <span>♡ liked by roseinruin and others</span>
-      </div>
+    <!-- FLOATING MUSIC WIDGET -->
+    <div id="musicSticker" class="fixed bottom-16 right-4 z-40 glass-card rounded-full p-2 pr-4 flex items-center gap-3 shadow-2xl border border-pink-500/30 hover:scale-105 transition-transform cursor-pointer" onclick="toggleAudio()">
+        <div class="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border border-pink-500/50">
+            <img id="musicCover" src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover animate-spin-slow">
+        </div>
+
+        <div class="flex flex-col">
+            <div class="flex items-center gap-1.5">
+                <i class="fa-solid fa-music text-[10px] text-pink-400"></i>
+                <span class="text-xs font-bold text-white tracking-wide">Kissing in Cars</span>
+            </div>
+            <span class="text-[10px] text-gray-400">Pierce the Veil • For Yaeb 🤍</span>
+        </div>
+
+        <div class="flex items-end gap-0.5 h-4 ml-1">
+            <div class="eq-bar w-0.5 bg-pink-500 rounded-full"></div>
+            <div class="eq-bar w-0.5 bg-pink-500 rounded-full"></div>
+            <div class="eq-bar w-0.5 bg-pink-500 rounded-full"></div>
+            <div class="eq-bar w-0.5 bg-pink-500 rounded-full"></div>
+        </div>
     </div>
-  </div>
 
-  <!-- MUSIC PLAYER -->
-  <audio id="backgroundMusic" loop>
-    <source src="kissing-in-cars.mp3" type="audio/mpeg">
-  </audio>
+    <!-- Hidden Audio Tag -->
+    <audio id="bgAudio" loop preload="auto">
+        <source src="kissingincars.mp3" type="audio/mpeg">
+    </audio>
 
-  <button id="musicButton" class="music-button hidden" aria-label="Toggle music">
-    ♫
-  </button>
+    <script>
+        /* WEB AUDIO API SOUND SYNTHESIZER */
+        const SoundFX = {
+            ctx: null,
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            },
+            playBeep(freq = 440, type = 'sine', duration = 0.1) {
+                try {
+                    this.init();
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                    gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) {}
+            },
+            playMatchSound() {
+                this.playBeep(523.25, 'triangle', 0.15);
+                setTimeout(() => this.playBeep(659.25, 'triangle', 0.2), 100);
+            },
+            playVictorySound() {
+                this.playBeep(440, 'sine', 0.1);
+                setTimeout(() => this.playBeep(554.37, 'sine', 0.1), 100);
+                setTimeout(() => this.playBeep(659.25, 'sine', 0.1), 200);
+                setTimeout(() => this.playBeep(880, 'sine', 0.3), 300);
+            },
+            playErrorSound() {
+                this.playBeep(180, 'sawtooth', 0.2);
+            }
+        };
 
-  <script src="script.js"></script>
+        const APP_STATE = {
+            correctPin: '0808',
+            enteredPin: '',
+            isPlayingAudio: false,
+            currentTab: 'feed',
+            currentStoryIndex: 0,
+            storyInterval: null,
+            posts: [
+                {
+                    id: 1,
+                    author: "roseinruin",
+                    tagged: "anarkiyaib",
+                    avatar: "foto1.jpg",
+                    image: "foto1.jpg",
+                    likes: 808,
+                    isLiked: true,
+                    location: "In My Heart 💖 | Happy Mensive",
+                    caption: "happy mensiversary to my dearest boy, Yaeb. ♡ #Mensiversary #MyBoy",
+                    timeAgo: "2 hours ago",
+                    comments: [
+                        { user: "anarkiyaib", text: "Makasih banyak sayanggg! 🥰 Love you so much!" }
+                    ]
+                },
+                {
+                    id: 2,
+                    author: "roseinruin",
+                    tagged: "anarkiyaib",
+                    avatar: "foto1.jpg",
+                    image: "foto2.jpg",
+                    likes: 890,
+                    isLiked: false,
+                    location: "Our Safe Place ✨",
+                    caption: "a lovely soul in the shape of my favorite person.",
+                    timeAgo: "4 hours ago",
+                    comments: []
+                },
+                {
+                    id: 3,
+                    author: "roseinruin",
+                    tagged: "anarkiyaib",
+                    avatar: "foto1.jpg",
+                    image: "foto3.jpg",
+                    likes: 1024,
+                    isLiked: true,
+                    location: "Cozy Moments ☕",
+                    caption: "there's something so special about the way you exist.",
+                    timeAgo: "6 hours ago",
+                    comments: []
+                },
+                {
+                    id: 4,
+                    author: "roseinruin",
+                    tagged: "anarkiyaib",
+                    avatar: "foto1.jpg",
+                    image: "foto4.jpg",
+                    likes: 756,
+                    isLiked: false,
+                    location: "Laughing Together 😁",
+                    caption: "my favorite little universe, in all its wonder.",
+                    timeAgo: "8 hours ago",
+                    comments: []
+                },
+                {
+                    id: 5,
+                    author: "roseinruin",
+                    tagged: "anarkiyaib",
+                    avatar: "foto1.jpg",
+                    image: "foto5.jpg",
+                    likes: 932,
+                    isLiked: true,
+                    location: "Sweet Memories 🍯",
+                    caption: "may you always find a thousand reasons to smile.",
+                    timeAgo: "12 hours ago",
+                    comments: []
+                },
+                {
+                    id: 6,
+                    author: "roseinruin",
+                    tagged: "anarkiyaib",
+                    avatar: "foto1.jpg",
+                    image: "foto6.jpg",
+                    likes: 1200,
+                    isLiked: true,
+                    location: "Under The Same Sky 🌌",
+                    caption: "you deserve all the gentleness this world has to offer.",
+                    timeAgo: "1 day ago",
+                    comments: []
+                },
+                {
+                    id: 7,
+                    author: "roseinruin",
+                    tagged: "anarkiyaib",
+                    avatar: "foto1.jpg",
+                    image: "foto7.jpg",
+                    likes: 2026,
+                    isLiked: true,
+                    location: "Forever & Always 💖",
+                    caption: "forever fond of the person that you are. ♡ @anarkiyaib",
+                    timeAgo: "1 day ago",
+                    comments: [
+                        { user: "anarkiyaib", text: "Forever and always with you sayang 🤍" }
+                    ]
+                }
+            ]
+        };
+
+        function pressPin(num) {
+            SoundFX.playBeep(600, 'sine', 0.05);
+            if (APP_STATE.enteredPin.length < 4) {
+                APP_STATE.enteredPin += num;
+                updatePinDots();
+
+                if (APP_STATE.enteredPin.length === 4) {
+                    setTimeout(verifyPin, 200);
+                }
+            }
+        }
+
+        function backspacePin() {
+            SoundFX.playBeep(300, 'sine', 0.05);
+            if (APP_STATE.enteredPin.length > 0) {
+                APP_STATE.enteredPin = APP_STATE.enteredPin.slice(0, -1);
+                updatePinDots();
+            }
+        }
+
+        function clearPin() {
+            APP_STATE.enteredPin = '';
+            updatePinDots();
+        }
+
+        function updatePinDots() {
+            const dots = document.querySelectorAll('#pinDots .dot');
+            dots.forEach((dot, index) => {
+                if (index < APP_STATE.enteredPin.length) {
+                    dot.classList.add('bg-pink-500', 'border-pink-500', 'scale-110');
+                    dot.classList.remove('border-gray-600');
+                } else {
+                    dot.classList.remove('bg-pink-500', 'border-pink-500', 'scale-110');
+                    dot.classList.add('border-gray-600');
+                }
+            });
+        }
+
+        function verifyPin() {
+            const errorMsg = document.getElementById('pinErrorMsg');
+            const card = document.querySelector('#pinLockScreen > div');
+
+            if (APP_STATE.enteredPin === APP_STATE.correctPin) {
+                SoundFX.playVictorySound();
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+
+                document.getElementById('pinLockScreen').classList.add('opacity-0', 'pointer-events-none');
+                document.getElementById('mainContent').classList.remove('opacity-0');
+
+                playAudio();
+
+                setTimeout(() => {
+                    document.getElementById('pinLockScreen').style.display = 'none';
+                }, 700);
+
+            } else {
+                SoundFX.playErrorSound();
+                card.classList.add('shake-animation');
+                errorMsg.classList.remove('opacity-0');
+
+                setTimeout(() => {
+                    card.classList.remove('shake-animation');
+                    clearPin();
+                }, 500);
+
+                setTimeout(() => {
+                    errorMsg.classList.add('opacity-0');
+                }, 2000);
+            }
+        }
+
+        function switchTab(tabName) {
+            APP_STATE.currentTab = tabName;
+            
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-pink-500');
+                btn.classList.add('text-gray-400');
+            });
+
+            const activeBtn = document.getElementById(`nav-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-400');
+                activeBtn.classList.add('text-pink-500');
+            }
+
+            if (tabName === 'games') {
+                initMemoryGame();
+                initQuizGame();
+                renderCoupons();
+            }
+        }
+
+        function renderFeed() {
+            const container = document.getElementById('feedContainer');
+            container.innerHTML = '';
+
+            APP_STATE.posts.forEach((post, index) => {
+                const postEl = document.createElement('article');
+                postEl.className = "bg-igCard border border-igBorder rounded-2xl overflow-hidden shadow-lg mb-6";
+
+                postEl.innerHTML = `
+                    <div class="p-3 flex items-center justify-between border-b border-gray-800/60">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full p-[2px] story-gradient">
+                                <img src="${post.avatar}" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover rounded-full border border-black">
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-white flex items-center gap-1">
+                                    ${post.author} <i class="fa-solid fa-circle-check text-blue-400 text-[10px]"></i>
+                                    <span class="text-[10px] text-gray-400 font-normal">with @${post.tagged}</span>
+                                </h4>
+                                <p class="text-[10px] text-gray-400">${post.location}</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-ellipsis text-gray-400"></i>
+                    </div>
+
+                    <div class="relative w-full aspect-square bg-gray-900 overflow-hidden cursor-pointer" onclick="handleDoubleTapImage(${index}, event)">
+                        <img src="${post.image}" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover">
+                        <i id="heartPop-${index}" class="fa-solid fa-heart heart-pop text-6xl text-pink-500 drop-shadow-2xl"></i>
+                    </div>
+
+                    <div class="p-3.5 space-y-2">
+                        <div class="flex items-center justify-between text-xl">
+                            <div class="flex items-center gap-4">
+                                <button onclick="toggleLikePost(${index})" class="transition-transform active:scale-125">
+                                    <i id="likeIcon-${index}" class="${post.isLiked ? 'fa-solid fa-heart text-pink-500' : 'fa-regular fa-heart text-white'}"></i>
+                                </button>
+                                <button onclick="focusCommentInput(${index})" class="text-white hover:text-gray-400">
+                                    <i class="fa-regular fa-comment"></i>
+                                </button>
+                                <button onclick="switchTab('dm')" class="text-white hover:text-gray-400">
+                                    <i class="fa-regular fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <i class="fa-regular fa-bookmark text-white"></i>
+                        </div>
+
+                        <p class="text-xs font-bold text-white">
+                            Liked by <span class="font-bold">anarkiyaib</span> and <span id="likeCount-${index}">${post.likes.toLocaleString()}</span> others
+                        </p>
+
+                        <div class="text-xs leading-relaxed text-gray-200">
+                            <span class="font-bold text-white mr-1.5">${post.author}</span>
+                            <span>${post.caption}</span>
+                        </div>
+
+                        <div id="commentsList-${index}" class="space-y-1 pt-1">
+                            ${post.comments.map(c => `
+                                <p class="text-[11px] text-gray-300">
+                                    <span class="font-semibold text-white mr-1">${c.user}</span> ${c.text}
+                                </p>
+                            `).join('')}
+                        </div>
+
+                        <p class="text-[9px] text-gray-500 uppercase tracking-wider pt-1">${post.timeAgo}</p>
+
+                        <div class="pt-2 flex items-center border-t border-gray-800/80 gap-2">
+                            <input id="commentInput-${index}" type="text" placeholder="Add a comment as @anarkiyaib..." class="flex-1 bg-transparent text-xs text-white placeholder-gray-500 focus:outline-none" onkeypress="handleCommentKeyPress(${index}, event)">
+                            <button onclick="addComment(${index})" class="text-xs font-bold text-pink-500 hover:text-pink-400">Post</button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(postEl);
+            });
+        }
+
+        let lastTap = 0;
+        function handleDoubleTapImage(index, event) {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 300 && tapLength > 0) {
+                triggerHeartPop(index);
+                if (!APP_STATE.posts[index].isLiked) {
+                    toggleLikePost(index);
+                }
+            }
+            lastTap = currentTime;
+        }
+
+        function triggerHeartPop(index) {
+            SoundFX.playBeep(880, 'sine', 0.15);
+            const heart = document.getElementById(`heartPop-${index}`);
+            heart.classList.add('active');
+            setTimeout(() => {
+                heart.classList.remove('active');
+            }, 600);
+        }
+
+        function toggleLikePost(index) {
+            const post = APP_STATE.posts[index];
+            post.isLiked = !post.isLiked;
+            post.likes += post.isLiked ? 1 : -1;
+
+            const icon = document.getElementById(`likeIcon-${index}`);
+            const count = document.getElementById(`likeCount-${index}`);
+
+            if (post.isLiked) {
+                icon.className = 'fa-solid fa-heart text-pink-500';
+                SoundFX.playBeep(700, 'sine', 0.1);
+            } else {
+                icon.className = 'fa-regular fa-heart text-white';
+            }
+            count.textContent = post.likes.toLocaleString();
+        }
+
+        function focusCommentInput(index) {
+            document.getElementById(`commentInput-${index}`).focus();
+        }
+
+        function handleCommentKeyPress(index, event) {
+            if (event.key === 'Enter') {
+                addComment(index);
+            }
+        }
+
+        function addComment(index) {
+            const input = document.getElementById(`commentInput-${index}`);
+            const text = input.value.trim();
+            if (text !== '') {
+                SoundFX.playBeep(600, 'sine', 0.08);
+                APP_STATE.posts[index].comments.push({ user: 'anarkiyaib', text: text });
+                
+                const commentsContainer = document.getElementById(`commentsList-${index}`);
+                const p = document.createElement('p');
+                p.className = 'text-[11px] text-gray-300';
+                p.innerHTML = `<span class="font-semibold text-white mr-1">anarkiyaib</span> ${text}`;
+                commentsContainer.appendChild(p);
+
+                input.value = '';
+            }
+        }
+
+        /* GAME 1: MEMORY MATCH ENGINE */
+        const MEMORY_ITEMS = [
+            { id: 1, img: 'foto1.jpg', text: 'My Favorite Boy 🤍' },
+            { id: 2, img: 'foto2.jpg', text: 'Lovely Soul ✨' },
+            { id: 3, img: 'foto3.jpg', text: 'Special Way 🤗' },
+            { id: 4, img: 'foto4.jpg', text: 'Little Universe 🌌' },
+            { id: 5, img: 'foto5.jpg', text: 'Handsome Yaeb 😎' },
+            { id: 6, img: 'foto6.jpg', text: 'Forever Love 💖' }
+        ];
+
+        let memoryState = {
+            cards: [],
+            flippedCards: [],
+            matchedPairs: 0,
+            moves: 0
+        };
+
+        function initMemoryGame() {
+            memoryState.cards = [...MEMORY_ITEMS, ...MEMORY_ITEMS]
+                .sort(() => Math.random() - 0.5)
+                .map((item, index) => ({ ...item, uniqueId: index, isFlipped: false, isMatched: false }));
+
+            memoryState.flippedCards = [];
+            memoryState.matchedPairs = 0;
+            memoryState.moves = 0;
+
+            document.getElementById('memoryMoves').textContent = '0';
+            document.getElementById('memoryMatches').textContent = '0 / 6';
+
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+
+            memoryState.cards.forEach((card, idx) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = "aspect-square perspective-1000 cursor-pointer";
+                cardEl.onclick = () => flipMemoryCard(idx);
+
+                cardEl.innerHTML = `
+                    <div id="memoryCardInner-${idx}" class="w-full h-full relative transform-style-3d transition-transform duration-500 rounded-xl">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-gray-900 to-gray-800 border border-gray-700 rounded-xl flex items-center justify-center backface-hidden shadow-md">
+                            <i class="fa-solid fa-heart text-pink-500 text-xl"></i>
+                        </div>
+                        <div class="absolute inset-0 rounded-xl overflow-hidden border-2 border-pink-500 rotate-y-180 backface-hidden">
+                            <img src="${card.img}" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(cardEl);
+            });
+        }
+
+        function flipMemoryCard(index) {
+            const card = memoryState.cards[index];
+            if (card.isFlipped || card.isMatched || memoryState.flippedCards.length === 2) return;
+
+            SoundFX.playBeep(500, 'sine', 0.08);
+            card.isFlipped = true;
+            document.getElementById(`memoryCardInner-${index}`).classList.add('rotate-y-180');
+            memoryState.flippedCards.push({ card, index });
+
+            if (memoryState.flippedCards.length === 2) {
+                memoryState.moves++;
+                document.getElementById('memoryMoves').textContent = memoryState.moves;
+
+                const [c1, c2] = memoryState.flippedCards;
+                if (c1.card.id === c2.card.id) {
+                    SoundFX.playMatchSound();
+                    c1.card.isMatched = true;
+                    c2.card.isMatched = true;
+                    memoryState.matchedPairs++;
+                    document.getElementById('memoryMatches').textContent = `${memoryState.matchedPairs} / 6`;
+                    memoryState.flippedCards = [];
+
+                    if (memoryState.matchedPairs === 6) {
+                        setTimeout(() => {
+                            SoundFX.playVictorySound();
+                            confetti({ particleCount: 80, spread: 60 });
+                            alert('Horeee! Yaeb berhasil mencocokkan semua foto kenangan kita! Zaheed makin sayang 💖');
+                        }, 400);
+                    }
+                } else {
+                    setTimeout(() => {
+                        c1.card.isFlipped = false;
+                        c2.card.isFlipped = false;
+                        document.getElementById(`memoryCardInner-${c1.index}`).classList.remove('rotate-y-180');
+                        document.getElementById(`memoryCardInner-${c2.index}`).classList.remove('rotate-y-180');
+                        memoryState.flippedCards = [];
+                    }, 900);
+                }
+            }
+        }
+
+        /* GAME 2: LOVE CATCHER CANVAS GAME ENGINE */
+        let catcherGame = {
+            active: false,
+            score: 0,
+            lives: 3,
+            basketX: 120,
+            items: [],
+            animId: null
+        };
+
+        function startCatcherGame() {
+            document.getElementById('catcherOverlay').classList.add('hidden');
+            catcherGame.active = true;
+            catcherGame.score = 0;
+            catcherGame.lives = 3;
+            catcherGame.items = [];
+            
+            document.getElementById('catcherScore').textContent = '0';
+            document.getElementById('catcherLives').textContent = '❤️❤️❤️';
+
+            const canvas = document.getElementById('catcherCanvas');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            catcherGame.basketX = canvas.width / 2 - 25;
+
+            document.getElementById('btnMoveLeft').onclick = () => moveBasket(-30);
+            document.getElementById('btnMoveRight').onclick = () => moveBasket(30);
+
+            if (catcherGame.animId) cancelAnimationFrame(catcherGame.animId);
+            runCatcherLoop();
+        }
+
+        function moveBasket(dir) {
+            const canvas = document.getElementById('catcherCanvas');
+            catcherGame.basketX = Math.max(0, Math.min(canvas.width - 50, catcherGame.basketX + dir));
+        }
+
+        function runCatcherLoop() {
+            if (!catcherGame.active) return;
+
+            const canvas = document.getElementById('catcherCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (Math.random() < 0.04) {
+                const type = Math.random() < 0.6 ? 'heart' : (Math.random() < 0.8 ? 'star' : 'bomb');
+                catcherGame.items.push({
+                    x: Math.random() * (canvas.width - 30),
+                    y: 0,
+                    type: type,
+                    speed: Math.random() * 2 + 2
+                });
+            }
+
+            ctx.fillStyle = '#E1306C';
+            ctx.beginPath();
+            ctx.roundRect(catcherGame.basketX, canvas.height - 30, 50, 18, 9);
+            ctx.fill();
+            ctx.fillStyle = '#FFF';
+            ctx.font = '10px sans-serif';
+            ctx.fillText('YAEB', catcherGame.basketX + 12, canvas.height - 18);
+
+            for (let i = catcherGame.items.length - 1; i >= 0; i--) {
+                const item = catcherGame.items[i];
+                item.y += item.speed;
+
+                ctx.font = '20px sans-serif';
+                const icon = item.type === 'heart' ? '💖' : (item.type === 'star' ? '⭐' : '💣');
+                ctx.fillText(icon, item.x, item.y);
+
+                if (item.y >= canvas.height - 35 && item.y <= canvas.height - 10 &&
+                    item.x >= catcherGame.basketX - 15 && item.x <= catcherGame.basketX + 45) {
+                    
+                    if (item.type === 'heart') {
+                        catcherGame.score += 10;
+                        SoundFX.playBeep(800, 'sine', 0.1);
+                    } else if (item.type === 'star') {
+                        catcherGame.score += 25;
+                        SoundFX.playMatchSound();
+                    } else {
+                        catcherGame.lives--;
+                        SoundFX.playErrorSound();
+                        document.getElementById('catcherLives').textContent = '❤️'.repeat(catcherGame.lives);
+                    }
+
+                    document.getElementById('catcherScore').textContent = catcherGame.score;
+                    catcherGame.items.splice(i, 1);
+
+                    if (catcherGame.lives <= 0) {
+                        endCatcherGame();
+                        return;
+                    }
+                } else if (item.y > canvas.height) {
+                    catcherGame.items.splice(i, 1);
+                }
+            }
+
+            catcherGame.animId = requestAnimationFrame(runCatcherLoop);
+        }
+
+        function endCatcherGame() {
+            catcherGame.active = false;
+            const overlay = document.getElementById('catcherOverlay');
+            overlay.innerHTML = `
+                <i class="fa-solid fa-trophy text-4xl text-yellow-400"></i>
+                <h3 class="text-base font-bold text-white">Game Over!</h3>
+                <p class="text-xs text-pink-400 font-bold">Skor Akhir Yaeb: ${catcherGame.score} Poin!</p>
+                <p class="text-[11px] text-gray-300">Hebat banget pacar Zaheed! 💕</p>
+                <button onclick="startCatcherGame()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold px-6 py-2 rounded-full text-xs">
+                    Main Lagi 🔄
+                </button>
+            `;
+            overlay.classList.remove('hidden');
+        }
+
+        /* GAME 3: TRIVIA QUIZ ENGINE */
+        const QUIZ_QUESTIONS = [
+            {
+                q: "1. Siapa yang bikin website mensiversary spesial ini?",
+                options: ["Zaheed 💕", "Zaheed Pacar Yaeb", "Zaheed Sayang", "Semua Jawaban Benar! 😍"],
+                correct: 3
+            },
+            {
+                q: "2. Kapan tanggal spesial hubungan Zaheed & Yaeb?",
+                options: ["8 Agustus 2026 💖", "17 Agustus", "1 Januari", "Setiap Hari Spesial ✨"],
+                correct: 0
+            },
+            {
+                q: "3. Lagu Pierce the Veil apa yang diputar di website ini?",
+                options: ["Kissing in Cars 🎵", "King for a Day", "Bulletproof Love", "Caraphernelia"],
+                correct: 0
+            },
+            {
+                q: "4. Apa hal yang paling bikin Zaheed bahagia bersamamu?",
+                options: ["Kehadiran Yaeb", "Senyum manis Yaeb", "Segala kebaikan Yaeb", "Semua Hal tentang Yaeb! ✨"],
+                correct: 3
+            },
+            {
+                q: "5. Harapan Zaheed di Mensiversary kali ini?",
+                options: ["Yaeb selalu bahagia & sehat", "Kita makin langgeng", "Makin sayang selamanya", "Semuanya & Bareng Terus! 💖"],
+                correct: 3
+            }
+        ];
+
+        let quizState = { currentStep: 0, score: 0 };
+
+        function initQuizGame() {
+            quizState.currentStep = 0;
+            quizState.score = 0;
+            renderQuizStep();
+        }
+
+        function renderQuizStep() {
+            const q = QUIZ_QUESTIONS[quizState.currentStep];
+            document.getElementById('quizStepText').textContent = `Pertanyaan ${quizState.currentStep + 1} dari 5`;
+            document.getElementById('quizScoreText').textContent = `Score: ${quizState.score}`;
+            document.getElementById('quizQuestion').textContent = q.q;
+
+            const opts = document.getElementById('quizOptions');
+            opts.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 rounded-xl bg-white/5 hover:bg-pink-500/20 border border-white/10 text-xs font-medium text-gray-200 hover:text-white hover:border-pink-500 transition-all active:scale-98 flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+                btn.onclick = () => answerQuiz(idx);
+                opts.appendChild(btn);
+            });
+        }
+
+        function answerQuiz(selectedIdx) {
+            const q = QUIZ_QUESTIONS[quizState.currentStep];
+            if (selectedIdx === q.correct) {
+                SoundFX.playMatchSound();
+                quizState.score += 20;
+            } else {
+                SoundFX.playBeep(400, 'sine', 0.1);
+            }
+
+            quizState.currentStep++;
+            if (quizState.currentStep < QUIZ_QUESTIONS.length) {
+                renderQuizStep();
+            } else {
+                document.getElementById('certificateModal').classList.remove('hidden');
+                confetti({ particleCount: 100, spread: 80 });
+            }
+        }
+
+        function closeCertificateModal() {
+            document.getElementById('certificateModal').classList.add('hidden');
+            initQuizGame();
+        }
+
+        /* GAME 4: LOVE COUPONS ENGINE */
+        const COUPONS = [
+            { id: 1, title: '🎟️ Dinner & Date Option', desc: 'Bebas pilih tempat ngedate & Zaheed ikut aja!', claimed: false },
+            { id: 2, title: '🎟️ Unlimited Hugs & Kisses', desc: 'Berlaku kapan pun tanpa batas!', claimed: false },
+            { id: 3, title: '🎟️ Maafkan Ngambek Random', desc: 'Kartu bebas salah 1x pas Zaheed ngambek!', claimed: false },
+            { id: 4, title: '🎟️ Late Night Call / Game', desc: 'Begadang ditemenin Zaheed sepuasnya!', claimed: false }
+        ];
+
+        function renderCoupons() {
+            const grid = document.getElementById('couponsGrid');
+            grid.innerHTML = '';
+
+            COUPONS.forEach(c => {
+                const card = document.createElement('div');
+                card.className = "glass-card p-4 rounded-2xl border border-pink-500/30 flex flex-col justify-between text-center space-y-2 relative overflow-hidden";
+                card.innerHTML = `
+                    <h4 class="text-xs font-bold text-pink-400">${c.title}</h4>
+                    <p class="text-[10px] text-gray-300">${c.desc}</p>
+                    <button onclick="claimCoupon(${c.id})" id="btnCoupon-${c.id}" class="w-full bg-pink-500/20 hover:bg-pink-500 text-pink-300 hover:text-white border border-pink-500/40 py-1.5 rounded-full text-[10px] font-bold transition-all">
+                        ${c.claimed ? 'Sudah Diklaim ✅' : 'Klaim Kupon 🎁'}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function claimCoupon(id) {
+            SoundFX.playVictorySound();
+            const c = COUPONS.find(item => item.id === id);
+            if (c) {
+                c.claimed = true;
+                renderCoupons();
+                confetti({ particleCount: 50, spread: 50 });
+            }
+        }
+
+        function switchGameMode(mode) {
+            document.querySelectorAll('.game-container').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.game-pill-btn').forEach(btn => {
+                btn.className = "game-pill-btn px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gray-800 text-gray-300 hover:text-white";
+            });
+
+            document.getElementById(`game-view-${mode}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-game-${mode}`);
+            if (activeBtn) {
+                activeBtn.className = "game-pill-btn active px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg";
+            }
+        }
+
+        function openStoryModal(index) {
+            APP_STATE.currentStoryIndex = index;
+            document.getElementById('storyModal').classList.remove('hidden');
+            renderStoryContent();
+        }
+
+        function closeStoryModal() {
+            document.getElementById('storyModal').classList.add('hidden');
+            if (APP_STATE.storyInterval) clearInterval(APP_STATE.storyInterval);
+        }
+
+        function renderStoryContent() {
+            const post = APP_STATE.posts[APP_STATE.currentStoryIndex];
+            document.getElementById('storyModalImg').src = post.image;
+            document.getElementById('storyModalCaption').textContent = post.caption;
+
+            const progressContainer = document.getElementById('storyProgressBars');
+            progressContainer.innerHTML = '';
+            
+            APP_STATE.posts.forEach((_, i) => {
+                const bar = document.createElement('div');
+                bar.className = 'flex-1 h-0.5 bg-white/30 rounded-full overflow-hidden';
+                const fill = document.createElement('div');
+                fill.className = 'h-full bg-white transition-all duration-100';
+                fill.style.width = i < APP_STATE.currentStoryIndex ? '100%' : '0%';
+                bar.appendChild(fill);
+                progressContainer.appendChild(bar);
+            });
+
+            if (APP_STATE.storyInterval) clearInterval(APP_STATE.storyInterval);
+            let progress = 0;
+            const activeFill = progressContainer.children[APP_STATE.currentStoryIndex].firstChild;
+            
+            APP_STATE.storyInterval = setInterval(() => {
+                progress += 2;
+                activeFill.style.width = `${progress}%`;
+                if (progress >= 100) {
+                    clearInterval(APP_STATE.storyInterval);
+                    nextStory();
+                }
+            }, 100);
+        }
+
+        function nextStory() {
+            if (APP_STATE.currentStoryIndex < APP_STATE.posts.length - 1) {
+                APP_STATE.currentStoryIndex++;
+                renderStoryContent();
+            } else {
+                closeStoryModal();
+            }
+        }
+
+        function prevStory() {
+            if (APP_STATE.currentStoryIndex > 0) {
+                APP_STATE.currentStoryIndex--;
+                renderStoryContent();
+            }
+        }
+
+        function shootStoryHeart() {
+            SoundFX.playBeep(900, 'sine', 0.15);
+            confetti({ particleCount: 30, spread: 40, origin: { y: 0.9 } });
+        }
+
+        function handleDmKeyPress(e) {
+            if (e.key === 'Enter') sendDmMessage();
+        }
+
+        function sendDmMessage() {
+            const input = document.getElementById('dmInput');
+            const val = input.value.trim();
+            if (val !== '') {
+                SoundFX.playBeep(650, 'sine', 0.08);
+                const area = document.getElementById('dmScrollArea');
+                
+                const bubble = document.createElement('div');
+                bubble.className = 'flex items-end justify-end gap-2';
+                bubble.innerHTML = `
+                    <div class="bg-pink-600 text-white p-3 rounded-2xl rounded-br-none text-xs max-w-[80%] shadow-lg">
+                        <p>${val}</p>
+                        <span class="text-[8px] opacity-70 block text-right mt-1">Just now</span>
+                    </div>
+                `;
+                area.appendChild(bubble);
+                input.value = '';
+                area.scrollTop = area.scrollHeight;
+
+                setTimeout(() => {
+                    document.getElementById('dmTypingIndicator').classList.remove('hidden');
+                }, 1000);
+
+                setTimeout(() => {
+                    document.getElementById('dmTypingIndicator').classList.add('hidden');
+                    const reply = document.createElement('div');
+                    reply.className = 'flex items-end gap-2 max-w-[80%]';
+                    reply.innerHTML = `
+                        <img src="foto1.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=300&q=80'" class="w-6 h-6 rounded-full object-cover">
+                        <div class="bg-gray-800 text-gray-100 p-3 rounded-2xl rounded-bl-none text-xs shadow-lg">
+                            <p>Makasih pesan manisnya Zaheed sayang! I love you so much!! 💕</p>
+                            <span class="text-[8px] opacity-60 block text-right mt-1">Just now</span>
+                        </div>
+                    `;
+                    area.appendChild(reply);
+                    SoundFX.playBeep(800, 'sine', 0.1);
+                    area.scrollTop = area.scrollHeight;
+                }, 3000);
+            }
+        }
+
+        function openLyricsDrawer() {
+            document.getElementById('lyricsDrawer').classList.remove('hidden');
+        }
+
+        function closeLyricsDrawer() {
+            document.getElementById('lyricsDrawer').classList.add('hidden');
+        }
+
+        function playAudio() {
+            const audio = document.getElementById('bgAudio');
+            audio.play().then(() => {
+                APP_STATE.isPlayingAudio = true;
+                updateAudioUI();
+            }).catch(() => {});
+        }
+
+        function toggleAudio() {
+            const audio = document.getElementById('bgAudio');
+            if (APP_STATE.isPlayingAudio) {
+                audio.pause();
+                APP_STATE.isPlayingAudio = false;
+            } else {
+                audio.play();
+                APP_STATE.isPlayingAudio = true;
+            }
+            updateAudioUI();
+        }
+
+        function updateAudioUI() {
+            const icon = document.getElementById('soundIcon');
+            const cover = document.getElementById('musicCover');
+            const eqBars = document.querySelectorAll('.eq-bar');
+
+            if (APP_STATE.isPlayingAudio) {
+                icon.className = 'fa-solid fa-volume-high text-pink-500';
+                cover.classList.add('animate-spin-slow');
+                eqBars.forEach(b => b.style.animationPlayState = 'running');
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-gray-500';
+                cover.classList.remove('animate-spin-slow');
+                eqBars.forEach(b => b.style.animationPlayState = 'paused');
+            }
+        }
+
+        function startRelationshipCounter() {
+            // Relationship starting date: 8 Agustus 2026
+            const startDate = new Date('2026-08-08T00:00:00');
+
+            function updateCounter() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                if (diff < 0) {
+                    document.getElementById('timerDays').textContent = 0;
+                    document.getElementById('timerHours').textContent = 0;
+                    document.getElementById('timerMins').textContent = 0;
+                    document.getElementById('timerSecs').textContent = 0;
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const mins = Math.floor((diff / (1000 * 60)) % 60);
+                const secs = Math.floor((diff / 1000) % 60);
+
+                document.getElementById('timerDays').textContent = days;
+                document.getElementById('timerHours').textContent = hours;
+                document.getElementById('timerMins').textContent = mins;
+                document.getElementById('timerSecs').textContent = secs;
+            }
+
+            updateCounter();
+            setInterval(updateCounter, 1000);
+        }
+
+        function initFloatingHearts() {
+            const canvas = document.getElementById('bgHeartsCanvas');
+            const ctx = canvas.getContext('2d');
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            const hearts = Array.from({ length: 30 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 10 + 6,
+                speedY: Math.random() * 0.8 + 0.3,
+                opacity: Math.random() * 0.5 + 0.2
+            }));
+
+            function drawHeart(x, y, size, opacity) {
+                ctx.save();
+                ctx.globalAlpha = opacity;
+                ctx.fillStyle = '#E1306C';
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.bezierCurveTo(x - size / 2, y - size / 2, x - size, y + size / 3, x, y + size);
+                ctx.bezierCurveTo(x + size, y + size / 3, x + size / 2, y - size / 2, x, y);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                hearts.forEach(h => {
+                    h.y -= h.speedY;
+                    if (h.y < -20) {
+                        h.y = canvas.height + 20;
+                        h.x = Math.random() * canvas.width;
+                    }
+                    drawHeart(h.x, h.y, h.size, h.opacity);
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        window.onload = function() {
+            renderFeed();
+            initFloatingHearts();
+            startRelationshipCounter();
+        };
+    </script>
 </body>
 </html>
