@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d14">
+  <title>Happy Mensiversary | Yaeb & Zaheed</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <!-- LOGIN SCREEN -->
+  <section id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">♡</div>
+      <p class="eyebrow">A LITTLE PLACE FOR US</p>
+      <h1>Dear <span>Yaeb.</span></h1>
+      <p class="login-description">
+        A tiny archive of memories, feelings, and everything
+        I wish to keep with you.
+      </p>
+
+      <div class="login-input-wrap">
+        <input id="pinInput" type="password" maxlength="4"
+          inputmode="numeric" placeholder="Enter your secret PIN">
+      </div>
+      <button id="unlockBtn" class="primary-btn">Open our little world ♡</button>
+      <p id="pinError" class="error-text"></p>
+      <span class="login-footer">made with love, by Zaheed</span>
+    </div>
+  </section>
+
+  <!-- MAIN WEBSITE -->
+  <main id="website" class="website hidden">
+
+    <header class="topbar">
+      <div class="brand">our<span>archive.</span></div>
+      <div class="topbar-right">
+        <span class="live-dot"></span>
+        <span>private account</span>
+      </div>
+    </header>
+
+    <div class="page-layout">
+
+      <!-- PROFILE -->
+      <section class="profile-section">
+        <div class="profile-top">
+          <div class="avatar-ring">
+            <div class="avatar">♡</div>
+          </div>
+          <div class="profile-info">
+            <div class="username-line">
+              <h2>anarkiyaib</h2>
+              <span class="verified">✦</span>
+            </div>
+            <div class="profile-stats">
+              <div><strong>7</strong><span>posts</span></div>
+              <div><strong>∞</strong><span>memories</span></div>
+              <div><strong>1</strong><span>favorite</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-bio">
+          <strong>Yaeb ♡</strong>
+          <p>a lovely soul in the shape of my favorite person.</p>
+          <p>✧ forever someone's favorite boy.</p>
+          <p class="bio-link">with love, from <span>@roseinruin</span></p>
+        </div>
+
+        <div class="profile-actions">
+          <button class="profile-btn" onclick="scrollToPosts()">View memories</button>
+          <button class="profile-btn secondary" onclick="openDM()">Message</button>
+        </div>
+
+        <div class="story-row">
+          <div class="story-item">
+            <div class="story-circle">♡</div>
+            <span>us</span>
+          </div>
+          <div class="story-item">
+            <div class="story-circle">✧</div>
+            <span>favorite</span>
+          </div>
+          <div class="story-item">
+            <div class="story-circle">☾</div>
+            <span>moments</span>
+          </div>
+          <div class="story-item">
+            <div class="story-circle">∞</div>
+            <span>always</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <!-- POSTS -->
+      <section id="postsSection" class="posts-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">A COLLECTION OF US</p>
+            <h2>Little moments, <i>big feelings.</i></h2>
+          </div>
+          <span class="post-count">07 POSTS</span>
+        </div>
+
+        <div id="postsGrid" class="posts-grid"></div>
+      </section>
+
+      <!-- RELATIONSHIP -->
+      <section class="relationship-card">
+        <p class="eyebrow">OUR LITTLE TIMELINE</p>
+        <h2>Since the day <i>we began.</i></h2>
+        <p class="relationship-date">08 August 2026</p>
+
+        <div class="counter-grid">
+          <div><strong id="days">0</strong><span>days</span></div>
+          <div><strong id="hours">00</strong><span>hours</span></div>
+          <div><strong id="minutes">00</strong><span>minutes</span></div>
+          <div><strong id="seconds">00</strong><span>seconds</span></div>
+        </div>
+        <p class="counter-note">and every second is another reason to choose you. ♡</p>
+      </section>
+
+      <!-- LETTER -->
+      <section class="letter-section">
+        <p class="eyebrow">A LETTER FOR YOU</p>
+        <h2>Something I want <i>you to know.</i></h2>
+        <div class="letter-paper">
+          <span class="letter-decoration">♡</span>
+          <p class="letter-to">To my dearest Yaeb,</p>
+          <p>
+            Happy mensiversary to my favorite boy.
+            I don't think words will ever be enough to explain
+            how grateful I am to have you in my life.
+          </p>
+          <p>
+            There's something special about you that makes
+            even the simplest days feel a little more beautiful.
+            I hope you never forget how precious you are,
+            not only to me, but simply as the person you are.
+          </p>
+          <p>
+            May life always be gentle with you.
+            May your days be filled with little happiness,
+            warm moments, and countless reasons to smile.
+          </p>
+          <p>
+            Thank you for being my favorite person.
+            Here's to more memories, more laughter,
+            and many more chapters together.
+          </p>
+          <p class="letter-sign">With all my love,<br><i>Zaheed ♡</i></p>
+        </div>
+      </section>
+
+      <!-- QUIZ -->
+      <section class="quiz-section">
+        <p class="eyebrow">A LITTLE GAME</p>
+        <h2>How well do you <i>know us?</i></h2>
+        <div class="quiz-card">
+          <span id="quizNumber">QUESTION 01 / 04</span>
+          <h3 id="quizQuestion">When did our little story begin?</h3>
+          <div id="quizOptions" class="quiz-options"></div>
+          <p id="quizFeedback"></p>
+          <button id="nextQuizBtn" class="primary-btn hidden">Next question →</button>
+          <div id="quizResult" class="quiz-result hidden"></div>
+        </div>
+      </section>
+
+      <!-- SECRET -->
+      <section class="secret-section">
+        <p class="eyebrow">ONE MORE LITTLE THING</p>
+        <h2>A secret, just <i>for you.</i></h2>
+        <p>There is something waiting behind this little button.</p>
+        <button id="secretBtn" class="secret-btn">Open your surprise ♡</button>
+        <div id="secretMessage" class="secret-message hidden">
+          <span>♡</span>
+          <h3>You are my favorite notification.</h3>
+          <p>
+            If I could choose a person to meet in every lifetime,
+            I would still look for you. Thank you for existing,
+            Yaeb. I love the little world we are building together.
+          </p>
+        </div>
+      </section>
+
+      <!-- DM -->
+      <section class="dm-section" id="dmSection">
+        <p class="eyebrow">DIRECT MESSAGE</p>
+        <h2>A message from <i>Zaheed.</i></h2>
+
+        <div class="dm-window">
+          <div class="dm-header">
+            <div class="dm-avatar">Z</div>
+            <div>
+              <strong>roseinruin</strong>
+              <span>your favorite sender ♡</span>
+            </div>
+            <span class="dm-online">●</span>
+          </div>
+          <div class="dm-body">
+            <span class="message-date">TODAY · A SPECIAL DAY</span>
+            <div class="dm-bubble">
+              Happy mensiversary, my beloved Yaeb. Another little
+              chapter to celebrate having you in my life, and I
+              hope you know how much you mean to me. I'm endlessly
+              fond of the person you are, even the little things
+              you might not notice about yourself. I hope life
+              treats you kindly, that happiness finds you in
+              unexpected places, and that you never run out of
+              reasons to smile. Thank you for being you, my
+              favorite boy. Here's to many more chapters with you. ♡
+            </div>
+            <span class="seen-label">Seen just now ♡</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="footer-heart">♡</div>
+        <h2>Always, <i>in every little way.</i></h2>
+        <p>Created with love by Zaheed for Yaeb.</p>
+        <span>08.08.2026 — ∞</span>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- POST MODAL -->
+  <div id="postModal" class="modal hidden">
+    <div class="modal-backdrop" onclick="closePost()"></div>
+    <div class="post-modal-content">
+      <button class="modal-close" onclick="closePost()">×</button>
+      <img id="modalImage" src="" alt="Our memory">
+      <div class="modal-caption">
+        <strong>anarkiyaib</strong>
+        <p id="modalCaption"></p>
+        <span>♡ liked by roseinruin and others</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MUSIC PLAYER -->
+  <audio id="backgroundMusic" loop>
+    <source src="kissing-in-cars.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="musicButton" class="music-button hidden" aria-label="Toggle music">
+    ♫
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
